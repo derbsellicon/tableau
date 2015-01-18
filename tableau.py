@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 
 ratp_baseurl = 'http://www.ratp.fr/horaires/fr/ratp/bus/prochains_passages/PP/'
+stations = {'58':'528','62':'1336_1378'}
 
 def get_bus_times(bus_line, bus_station):
 	url = ratp_baseurl + 'B' + bus_line + '/' + bus_line + '_' + bus_station + '/A'
@@ -13,24 +14,12 @@ def get_bus_times(bus_line, bus_station):
 	del times[1]
 	return times
 
-def print_bus_58():
-	bline = '58'
-	bstation = '528'
-	times = get_bus_times(bline, bstation)
-	print 'bus:' , bline
+def print_bus(line):
+	times = get_bus_times(line, stations[line])
+	print 'bus:' , line
 	print 'prochain: ' + times[0]
 	print 'suivant: ' + times[1]
 
-def print_bus_62():
-	bline = '62'
-	bstation = '1336_1378'
-	times = get_bus_times(bline, bstation)
-	print 'bus:' , bline
-	print 'prochain: ' + times[0]
-	print 'suivant: ' + times[1]
-
-print_bus_58()
+print_bus('58')
 print '===================='
-print_bus_62()
-
-
+print_bus('62')
