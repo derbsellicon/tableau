@@ -24,7 +24,7 @@ ROOT=
 mkdir -p tmp
 
 usage(){
-	echo "$0 [start|stop]"
+	echo "$0 [start|stop|status]"
 	exit
 }
 
