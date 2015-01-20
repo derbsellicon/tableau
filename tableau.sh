@@ -1,9 +1,9 @@
 #!/bin/bash - 
 #===============================================================================
 #
-#          FILE:  script.sh
+#          FILE:  tableau.sh
 # 
-#         USAGE:  ./script.sh 
+#         USAGE:  ./tableau.sh 
 # 
 #   DESCRIPTION:  
 # 
@@ -11,8 +11,8 @@
 #  REQUIREMENTS:  ---
 #          BUGS:  ---
 #         NOTES:  ---
-#        AUTHOR:  Zakaria ElQotbi (M), zakaria.elqotbi@openwide.fr
-#       COMPANY:  OpenWide, Paris
+#        AUTHOR:  Zakaria ElQotbi (M), zakaria@elqotbi.com
+#       COMPANY:  Derbsellicon, Paris
 #       VERSION:  1.0
 #       CREATED:  01/18/2015 11:52:53 PM CET
 #      REVISION:  ---
