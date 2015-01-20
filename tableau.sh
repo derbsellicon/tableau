@@ -56,12 +56,13 @@ done
 }
 
 do_display(){
+[ "$(uname -m)" = "armv6l" ] || DISPLAY_CMD=yes
 while :;
 do
 	for file in $(ls tmp/bus-*.ppm tmp/velib-*.ppm 2>/dev/null)
 	do
-		sudo ./led-matrix -r 16 -t $(echo "$(head -2 $file | tail -1 | awk '{print $1}') / 25" | bc) -D 1 $file
-		#display $file
+		[ "$DISPLAY_CMD" = "yes" ] && { display $file ; } || \
+			sudo ./led-matrix -r 16 -t $(echo "$(head -2 $file | tail -1 | awk '{print $1}') / 25" | bc) -D 1 $file
 	done
 done
 }
