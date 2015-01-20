@@ -89,14 +89,27 @@ do_start_all() {
 	echo display_pid:$display_pid >> /tmp/.tableau.lock
 }
 
-do_stop_all(){
+_parse_lockfile(){
 	read gather_pid display_pid <<< $(cat /tmp/.tableau.lock 2>/dev/null| cut -f2 -d:)
+}
+
+do_stop_all(){
+	_parse_lockfile
 	[ -n "$gather_pid" ] && kill $gather_pid
 	[ -n "$display_pid" ] && kill $display_pid
 	rm -f /tmp/.tableau.lock
 }
 
+do_status(){
+	_parse_lockfile
+	[ -n "$gather_pid" ] && echo Gathering running on pid:$gather_pid
+	[ -n "$display_pid" ] && echo Display running on pid:$display_pid
+}
+
 case "$1" in
+	"status")
+		do_status
+		;;
 	"stop")
 		do_stop_all
 		;;
