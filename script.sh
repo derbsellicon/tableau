@@ -23,15 +23,18 @@
 mkdir -p tmp
 rm -f tmp/*
 i=0
-(python ./tableau.py) | while read line
+(python ./tableau.py) | while read text
 do
-	ppmmake black $[ 11 * $(echo $line | wc -m )] 16 > tmp/template.ppm
-	ppmlabel -x 15 -y 14 -text "$line" tmp/template.ppm > tmp/ratp-bus${i}.ppm
+	line=$(echo $text | awk '{print $2}' )
+	text=$(echo $text | sed 's/Bus ..//')
+	ppmmake black $[ 10 * $(echo $text | wc -m )] 16 > tmp/template.ppm
+	ppmlabel -x 0 -y 12 -size 10 -text "$text" tmp/template.ppm > tmp/msg-bus${i}.ppm
+	pnmcat -lr images/blank16x32.ppm images/bus.ppm images/${line}.ppm tmp/msg-bus${i}.ppm images/blank16x32.ppm > tmp/ratp-bus${i}.ppm
 	i=$[i+1]
 done
 
 for file in tmp/ratp-bus*
 do
-	sudo ./led-matrix -r 16 -t $(echo "$(head -2 $file | tail -1 | awk '{print $1}') / 16.6" | bc) -D 1 $file
+	sudo ./led-matrix -r 16 -t $(echo "$(head -2 $file | tail -1 | awk '{print $1}') / 25" | bc) -D 1 $file
 	#display $file
 done
