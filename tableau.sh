@@ -19,11 +19,9 @@
 #===============================================================================
 
 #dependencies: bc netpbm #TODO
+ROOT=
 
 mkdir -p tmp
-rm -f tmp/*
-
-ROOT=
 
 usage(){
 	echo "$0 [start|stop]"
@@ -79,6 +77,7 @@ done
 }
 
 do_start_all() {
+	_sanity
 	do_gather_info &
 	gather_pid=$!
 
@@ -93,11 +92,16 @@ _parse_lockfile(){
 	read gather_pid display_pid <<< $(cat /tmp/.tableau.lock 2>/dev/null| cut -f2 -d:)
 }
 
+_sanity(){
+	rm -fr tmp
+	rm -f /tmp/.tableau.lock
+}
+
 do_stop_all(){
 	_parse_lockfile
 	[ -n "$gather_pid" ] && kill $gather_pid
 	[ -n "$display_pid" ] && kill $display_pid
-	rm -f /tmp/.tableau.lock
+	_sanity
 }
 
 do_status(){
