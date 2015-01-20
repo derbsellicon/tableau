@@ -30,14 +30,22 @@ usage(){
 	exit
 }
 
+__generate_image(){
+	text=$1
+	out=$2
+	pre=$3
+	post=$4
+	ppmmake black $(echo "8.5 * $(echo $text | wc -m)" |bc) 16 > tmp/template.ppm
+	ppmlabel -x 2 -y 12 -size 10 -text "$text" tmp/template.ppm > tmp/msg.ppm
+	pnmcat -lr images/blank16x32.ppm $pre tmp/msg.ppm $post images/blank16x32.ppm > $out
+}
+
 _gather_bus_info() {
 (python ./ratp-bus.py) | while read text
 do
 	line=$(echo $text | awk '{print $2}' )
-	text=$(echo $text | sed 's/Bus ..//')
-	ppmmake black $[ 10 * $(echo $text | wc -m )] 16 > tmp/template.ppm
-	ppmlabel -x 0 -y 12 -size 10 -text "$text" tmp/template.ppm > tmp/msg-bus${line}.ppm
-	pnmcat -lr images/blank16x32.ppm images/bus.ppm images/${line}.ppm tmp/msg-bus${line}.ppm images/blank16x32.ppm > tmp/bus-${line}.ppm
+	text=$(echo $text | sed 's/Bus .. //')
+	__generate_image "$text" tmp/bus-${line}.ppm "images/bus.ppm images/${line}.ppm"
 done
 }
 
@@ -46,9 +54,7 @@ _gather_velib_info() {
 do
 	station=$(echo $text | awk '{print $2}' )
 	text=$(echo $text | sed 's/ velib disponibles//')
-	ppmmake black $(echo "8.5 * $(echo $text | wc -m )"|bc) 16 > tmp/template.ppm
-	ppmlabel -x 2 -y 12 -size 10 -text "$text" tmp/template.ppm > tmp/msg-velib.ppm
-	pnmcat -lr images/blank16x32.ppm images/velib2.ppm tmp/msg-velib.ppm images/velib-logo3.ppm images/blank16x32.ppm images/blank16x32.ppm > tmp/velib-${station}.ppm
+	__generate_image "$text" tmp/velib-${station}.ppm images/velib2.ppm images/velib-logo3.ppm
 done
 }
 
