@@ -18,7 +18,7 @@
 #      REVISION:  ---
 #===============================================================================
 
-#dependencies: bc #TODO
+#dependencies: bc netpbm #TODO
 
 mkdir -p tmp
 rm -f tmp/*
