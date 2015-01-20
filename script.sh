@@ -22,15 +22,13 @@
 
 mkdir -p tmp
 rm -f tmp/*
-i=0
 (python ./tableau.py) | while read text
 do
 	line=$(echo $text | awk '{print $2}' )
 	text=$(echo $text | sed 's/Bus ..//')
 	ppmmake black $[ 10 * $(echo $text | wc -m )] 16 > tmp/template.ppm
-	ppmlabel -x 0 -y 12 -size 10 -text "$text" tmp/template.ppm > tmp/msg-bus${i}.ppm
-	pnmcat -lr images/blank16x32.ppm images/bus.ppm images/${line}.ppm tmp/msg-bus${i}.ppm images/blank16x32.ppm > tmp/ratp-bus${i}.ppm
-	i=$[i+1]
+	ppmlabel -x 0 -y 12 -size 10 -text "$text" tmp/template.ppm > tmp/msg-bus${line}.ppm
+	pnmcat -lr images/blank16x32.ppm images/bus.ppm images/${line}.ppm tmp/msg-bus${line}.ppm images/blank16x32.ppm > tmp/bus-${line}.ppm
 done
 
 for file in tmp/ratp-bus*
