@@ -22,7 +22,7 @@
 
 mkdir -p tmp
 rm -f tmp/*
-(python ./tableau.py) | while read text
+(python ./ratp-bus.py) | while read text
 do
 	line=$(echo $text | awk '{print $2}' )
 	text=$(echo $text | sed 's/Bus ..//')
