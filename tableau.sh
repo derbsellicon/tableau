@@ -21,7 +21,6 @@
 #dependencies: bc netpbm #TODO
 ROOT=
 
-mkdir -p tmp
 
 usage(){
 	echo "$0 [start|stop|status]"
@@ -93,7 +92,7 @@ _parse_lockfile(){
 }
 
 _sanity(){
-	rm -fr tmp
+	rm -fr tmp/*
 	rm -f /tmp/.tableau.lock
 }
 
@@ -110,17 +109,11 @@ do_status(){
 	[ -n "$display_pid" ] && echo Display running on pid:$display_pid
 }
 
+mkdir -p tmp
+
 case "$1" in
-	"status")
-		do_status
-		;;
-	"stop")
-		do_stop_all
-		;;
-	"start")
-		do_start_all
-		;;
-	*)
-		usage
-		;;
+	"status") do_status ;;
+	"stop")   do_stop_all ;;
+	"start")  do_start_all ;;
+	*)        usage ;;
 esac
