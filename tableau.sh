@@ -105,8 +105,8 @@ do_stop_all(){
 
 do_status(){
 	_parse_lockfile
-	[ -n "$gather_pid" ] && echo Gathering running on pid:$gather_pid
-	[ -n "$display_pid" ] && echo Display running on pid:$display_pid
+	[ -n "$gather_pid" ] &&  echo "Gathering .. RUNNING on pid:$gather_pid"  || echo "Gathering .. STOPPED"
+	[ -n "$display_pid" ] && echo "Display   .. RUNNING on pid:$display_pid" || echo "DISPLAY   .. STOPPED"
 }
 
 mkdir -p tmp
