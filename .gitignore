@@ -1,0 +1,5 @@
+*.swp
+tmp
+work
+.token
+*.log
