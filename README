@@ -1,0 +1,26 @@
+# Tableau
+Tableau is a little Raspberry project that gather information from Internet to display them in a RGB LCD connected to the RaspberryPi GPIOs.
+
+The project support right now information gathering:
+
+1. Velib and Ratp (Parisien Transportation agency): Get and display in realtime Bus time schedule and bikes availibility. 
+./tableau start
+
+2. Moroccon ISP facebook likes counter: Get and display Moroccon Internet provider likes counter.
+./voip-dislikes-campaign.sh start
+
+
+# Installation
+Install netpbm and bc on your Raspberry distribution
+RASPBIAN# apt-get install netpbm libnetpbm bc
+
+for Moroccoan ISP facebook likes counter a facebook developer app token is required 
+you can get your own from  https://developers.facebook.com/tools/accesstoken/
+and put it in '.token' file
+example: echo '1283Z7912372793|FZKJFKZFJLKZFJL'  > .token
+
+RASPBIAN# ./tableau start
+or
+RASPBIAN# ./voip-dislikes-campaign.sh start
+
+# Enjoy and feel free to contact us if any issue is detected.
